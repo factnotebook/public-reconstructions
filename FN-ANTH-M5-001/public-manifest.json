@@ -1,0 +1,61 @@
+{
+  "schema": "fn-public-manifest-v1",
+  "note": "This IS the exact canonical object each Reconstruction ID is a digest of. Verify: reconstruction_id == 'FN-' + first-16-hex( sha256( JSON of `manifest` with sorted keys, UTF-8, no ASCII escaping ) ). Version tokens are opaque by design: they COMMIT the execution semantics without describing them.",
+  "runs": {
+    "A": {
+      "reconstruction_id": "FN-3eb5cd7b2e221869",
+      "manifest": {
+        "engine_version": "fn-reconstruction-engine-v1",
+        "rule_language_version": "fn-rule-pattern-v1",
+        "composition_version": "fn-composition-v1",
+        "temporal_policy_version": "fn-temporal-v1",
+        "canonicalization_version": "fn-canon-v1",
+        "model_hash": "sha256:43c0d9814fa583b20c8e862c9b40b5f26c6cadb6b892314600dca146476c2cd4",
+        "observation_set_hash": "sha256:4e6e1bdf4497041d4636bbd7ea82c9681366e8d490676d18d5485a85bdc12833",
+        "window": null,
+        "node_states": {
+          "C1a": "ESTABLISHED",
+          "C2": "CONTRADICTED",
+          "C3": "CONTRADICTED"
+        },
+        "root_state": "CONTRADICTED"
+      }
+    },
+    "B": {
+      "reconstruction_id": "FN-5d37da1283c8c3aa",
+      "manifest": {
+        "engine_version": "fn-reconstruction-engine-v1",
+        "rule_language_version": "fn-rule-pattern-v1",
+        "composition_version": "fn-composition-v1",
+        "temporal_policy_version": "fn-temporal-v1",
+        "canonicalization_version": "fn-canon-v1",
+        "model_hash": "sha256:9dfa2b4d3d7d2f3bde1009cba55d4f700fd661124df2101d1617c43484d40e60",
+        "observation_set_hash": "sha256:4e6e1bdf4497041d4636bbd7ea82c9681366e8d490676d18d5485a85bdc12833",
+        "window": null,
+        "node_states": {
+          "C4a": "ESTABLISHED",
+          "C4b": "CANNOT_ESTABLISH"
+        },
+        "root_state": "CANNOT_ESTABLISH"
+      }
+    },
+    "C": {
+      "reconstruction_id": "FN-9001f64d9d60e4e1",
+      "manifest": {
+        "engine_version": "fn-reconstruction-engine-v1",
+        "rule_language_version": "fn-rule-pattern-v1",
+        "composition_version": "fn-composition-v1",
+        "temporal_policy_version": "fn-temporal-v1",
+        "canonicalization_version": "fn-canon-v1",
+        "model_hash": "sha256:986cf0224af11a568a9db4c435e68d6fa5a956b4672d4d7bb6950280c181fbe8",
+        "observation_set_hash": "sha256:4e6e1bdf4497041d4636bbd7ea82c9681366e8d490676d18d5485a85bdc12833",
+        "window": null,
+        "node_states": {
+          "C5a": "CONTRADICTED",
+          "C5b": "CANNOT_ESTABLISH"
+        },
+        "root_state": "CONTRADICTED"
+      }
+    }
+  }
+}

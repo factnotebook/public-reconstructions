@@ -1,0 +1,143 @@
+{
+  "schema": "fn-observation-manifest-v1",
+  "reconstruction": "FN-ANTH-M5-001",
+  "count": 8,
+  "observations": [
+    {
+      "id": "OBS-001",
+      "about": "declared_boundary",
+      "bears_on": "declared_boundary:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:a37b13951dc70aa394bd8d609cb39137778714b2546d01c15a97c702dd2a722b",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-002",
+      "about": "network",
+      "bears_on": "network:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:740691e6248b8ca2c2ea1b778dfcc2a5b705b474b21e4c7dfeb99449f386ae8d",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-003",
+      "about": "consequence",
+      "bears_on": "consequence:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:aa8e813c4a626e0d9d56f184a6be6d94b0d3c416270c0c30863008c55009ac6a",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-004",
+      "about": "consequence",
+      "bears_on": "consequence:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:ee227b3e977a2d1aeeabe4947e6d8425d60e20a86a14c19bb43b12de949f08a8",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-005",
+      "about": "representation",
+      "bears_on": "representation:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:26f405739ec922616ab10346bc056a67edf4857a534d1707554dbafc33452438",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-006",
+      "about": "representation",
+      "bears_on": "representation:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:3e8ac560f101693552f9b4853bf26316de2a7eec372517e68a6df7bbaa30ef3d",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-007",
+      "about": "package_release",
+      "bears_on": "package_release:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": true
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "Released Mythos 5 incident transcript — repository README",
+        "published": "2026-09-09",
+        "url": "https://github.com/anthropics/mythos-5-incident-transcript"
+      },
+      "content_digest": "sha256:396717765e26f15f8ae4301027184a053128656632ab2321898f256ee1b65df3",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    },
+    {
+      "id": "OBS-008",
+      "about": "package_description",
+      "bears_on": "package_description:mythos5",
+      "provenance": {
+        "source_origin": "subject-published",
+        "directly_inspectable": false
+      },
+      "source": {
+        "publisher": "Anthropic",
+        "artifact": "An alignment assessment of recent cybersecurity incidents",
+        "published": "2026-09-09",
+        "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+      },
+      "content_digest": "sha256:5aa39275fa008869132bbe3805ac0c97adae07176945407df08b23119baf90e7",
+      "note": "Source pointer and digest only; the source content is NOT reproduced here."
+    }
+  ]
+}

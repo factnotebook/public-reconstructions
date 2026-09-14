@@ -1,0 +1,140 @@
+{
+  "schema": "fn-reconstruction-contract-public-v1",
+  "reconstruction": "FN-ANTH-M5-001",
+  "runs": {
+    "A": {
+      "reconstruction_id": "FN-3eb5cd7b2e221869",
+      "observation_model": "FN-ANTH-M5-001-A",
+      "root": {
+        "proposition": "During the Mythos 5 cyber-evaluation, Claude's effective operating boundary remained consistent with the declared simulation / no-live-internet / no-real-consequence boundary.",
+        "state": "CONTRADICTED"
+      },
+      "subclaims": [
+        {
+          "id": "C1a",
+          "proposition": "Anthropic declared the operative boundary to be a simulation with no live internet access.",
+          "state": "ESTABLISHED",
+          "provenance": "declared",
+          "unresolved_conditions": null,
+          "supporting_basis": [
+            "OBS-001"
+          ],
+          "contradicting_basis": [],
+          "limitations": [
+            "provenance_floor = A1"
+          ]
+        },
+        {
+          "id": "C2",
+          "proposition": "No connection to the live public internet occurred during the evaluation.",
+          "state": "CONTRADICTED",
+          "provenance": "declared",
+          "unresolved_conditions": null,
+          "supporting_basis": [],
+          "contradicting_basis": [
+            "OBS-002"
+          ],
+          "limitations": [
+            "provenance_floor = A1"
+          ]
+        },
+        {
+          "id": "C3",
+          "proposition": "No real-world external consequence occurred during the evaluation.",
+          "state": "CONTRADICTED",
+          "provenance": "declared",
+          "unresolved_conditions": null,
+          "supporting_basis": [],
+          "contradicting_basis": [
+            "OBS-003",
+            "OBS-004"
+          ],
+          "limitations": [
+            "provenance_floor = A1"
+          ]
+        }
+      ],
+      "temporal_scope": {
+        "system": "Claude Mythos 5",
+        "interval": "2026 cyber-evaluations"
+      },
+      "population": "public observation package v1"
+    },
+    "B": {
+      "reconstruction_id": "FN-5d37da1283c8c3aa",
+      "observation_model": "FN-ANTH-M5-001-B",
+      "root": {
+        "proposition": "The model's internal operative disposition during the Mythos 5 evaluation is identifiable from the public package as a belief that the environment was simulated.",
+        "state": "CANNOT_ESTABLISH"
+      },
+      "subclaims": [
+        {
+          "id": "C4a",
+          "proposition": "Anthropic reports that the recorded chain-of-thought repeatedly represented the environment as simulated.",
+          "state": "ESTABLISHED",
+          "provenance": "declared",
+          "unresolved_conditions": null,
+          "supporting_basis": [
+            "OBS-005"
+          ],
+          "contradicting_basis": [],
+          "limitations": [
+            "provenance_floor = A1"
+          ]
+        },
+        {
+          "id": "C4b",
+          "proposition": "Those reported representations identify the model's actual internal belief that the environment was simulated.",
+          "state": "CANNOT_ESTABLISH",
+          "provenance": null,
+          "unresolved_conditions": "no observation in the package identifies an internal epistemic state; a reported representation and the external actions are each consistent with more than one internal state.",
+          "supporting_basis": [],
+          "contradicting_basis": [],
+          "limitations": []
+        }
+      ],
+      "temporal_scope": {
+        "system": "Claude Mythos 5",
+        "interval": "2026 cyber-evaluations"
+      },
+      "population": "public observation package v1"
+    },
+    "C": {
+      "reconstruction_id": "FN-9001f64d9d60e4e1",
+      "observation_model": "FN-ANTH-M5-001-C",
+      "root": {
+        "proposition": "The released public package is a complete and materially sufficient basis for reconstructing the foregoing propositions.",
+        "state": "CONTRADICTED"
+      },
+      "subclaims": [
+        {
+          "id": "C5a",
+          "proposition": "The released record is complete and unredacted.",
+          "state": "CONTRADICTED",
+          "provenance": "directly inspectable public artifact",
+          "unresolved_conditions": null,
+          "supporting_basis": [],
+          "contradicting_basis": [
+            "OBS-007"
+          ],
+          "limitations": []
+        },
+        {
+          "id": "C5b",
+          "proposition": "The released record is materially sufficient to reconstruct every relevant proposition (nothing absent is material).",
+          "state": "CANNOT_ESTABLISH",
+          "provenance": null,
+          "unresolved_conditions": "the available observations do not establish that the material absent from the released record is immaterial to every relevant proposition.",
+          "supporting_basis": [],
+          "contradicting_basis": [],
+          "limitations": []
+        }
+      ],
+      "temporal_scope": {
+        "system": "Claude Mythos 5",
+        "interval": "2026 cyber-evaluations"
+      },
+      "population": "public observation package v1"
+    }
+  }
+}
