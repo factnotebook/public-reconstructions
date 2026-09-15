@@ -1,5 +1,7 @@
 # FactNotebook Public Reconstruction Registry
 
+By **FactNotebook** — [factnotebook.com](https://factnotebook.com). Readable case write-ups: [factnotebook.com/audits/mythos-5](https://factnotebook.com/audits/mythos-5).
+
 Public, inspectable **outputs** from bounded FactNotebook reconstructions.
 Publication of a reconstruction does **not** imply publication of the reconstruction engine. Each artifact declares its observation surface, proposition, result, provenance, limitations and custody information — what FactNotebook asserts and on what, not how it computes.
 

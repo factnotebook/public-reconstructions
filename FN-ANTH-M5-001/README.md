@@ -1,5 +1,7 @@
 # FN-ANTH-M5-001 - Independent reconstruction from Anthropic's public incident report and released-transcript metadata (Mythos 5)
 
+**Readable web version:** https://factnotebook.com/audits/mythos-5  ·  **Reconstructed by FactNotebook** — https://factnotebook.com
+
 *A retrospective reconstruction of what can be established from the **public** record
 about the boundary of the Claude "Mythos 5" cyber-evaluation incident -
 including what is contradicted and what cannot be established. Outcome-neutral,
