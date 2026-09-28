@@ -1,0 +1,72 @@
+{
+  "schema": "factnotebook-manifest/v1",
+  "package": "neomundi:neomundi-controltower-pubmedqa-pilot-v01",
+  "generated_at": "2026-08-07T09:05:19Z",
+  "algorithm": "SHA-256",
+  "languages": [
+    "en",
+    "fr"
+  ],
+  "files": [
+    {
+      "name": "source_observations.jsonl",
+      "sha256": "66c7611e18d14fe0ad9e18aa11bf8ad291df078738d26322dce2cb7552459926",
+      "bytes": 37949,
+      "disclosure": "public (the ingested ControlTower export)"
+    },
+    {
+      "name": "evidence_layer.json",
+      "sha256": "1e0f750363068ede22ba6de95719e32f1d451eec541fb40aaa1d0e261f6d6b4d",
+      "bytes": 130365,
+      "disclosure": "internal (full projection, en)"
+    },
+    {
+      "name": "FACTNOTEBOOK_EVIDENCE_LAYER.html",
+      "sha256": "48dff819a5d8474a9e42629cb0ae73d217a4d4a39d3c47e66428fe4eda6b6c5b",
+      "bytes": 85401,
+      "disclosure": "internal (full tier, en)"
+    },
+    {
+      "name": "FACTNOTEBOOK_EVIDENCE_LAYER_review.html",
+      "sha256": "2ef9e1cb7d83ac4b009258deaefc1009eb12ab62838988d8aa796d31af2cc5de",
+      "bytes": 82416,
+      "disclosure": "review (private link, en)"
+    },
+    {
+      "name": "FACTNOTEBOOK_EVIDENCE_LAYER_commercial.html",
+      "sha256": "d2c04dc5b9bfb84755121594998a53fb2465c4c6e563329647b48581ee7fb1f3",
+      "bytes": 48075,
+      "disclosure": "public (served as index.html, en)"
+    },
+    {
+      "name": "evidence_layer.fr.json",
+      "sha256": "d14d7c584366ac62569af895a0a0144305de58b56b45458483eb69cbf574a7ad",
+      "bytes": 135347,
+      "disclosure": "internal (full projection, fr)"
+    },
+    {
+      "name": "FACTNOTEBOOK_EVIDENCE_LAYER.fr.html",
+      "sha256": "107f6ce7f490f8806d17e37811168549358ab337594379bf4a6a64817a56b275",
+      "bytes": 94129,
+      "disclosure": "internal (full tier, fr)"
+    },
+    {
+      "name": "FACTNOTEBOOK_EVIDENCE_LAYER_review.fr.html",
+      "sha256": "3078f0bddd3b681bb2f7580f5090f58667745538421ffa0bc4e057c3fcbd1799",
+      "bytes": 91338,
+      "disclosure": "review (private link, fr)"
+    },
+    {
+      "name": "FACTNOTEBOOK_EVIDENCE_LAYER_commercial.fr.html",
+      "sha256": "91db09419ce7361524bb8be2b6df8cc65bbda52fbe5403c8e336910315d468e3",
+      "bytes": 52041,
+      "disclosure": "public (served as index.fr.html, fr)"
+    }
+  ],
+  "note": "SHA-256 of every artifact in the package (hash published, non-public content not — a commitment, not a disclosure). The manifest cannot contain its own hash and is itself unsigned. Package integrity from generation time only: no immutability, no counter-signature.",
+  "rfc3161": {
+    "ingest": "anchored (ingest.tsr)",
+    "manifest": "manifest.tsr may be published alongside (anchored after this file is written)",
+    "verify": "openssl ts -verify -data <file> -in <token>.tsr -CAfile <DigiCert chain>"
+  }
+}
