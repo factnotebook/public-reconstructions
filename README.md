@@ -1,6 +1,6 @@
 # FactNotebook Public Reconstruction Registry
 
-By **FactNotebook** — [factnotebook.com](https://factnotebook.com). Readable case write-ups: [Mythos 5](https://factnotebook.com/audits/mythos-5) · [Goncourt / Orélien — AI contribution](https://factnotebook.com/audits/goncourt-orelien) · [NeoMundi ControlTower pilot](https://factnotebook.com/audits/neomundi/neomundi-controltower-pubmedqa-pilot-v01/).
+By **FactNotebook** — [factnotebook.com](https://factnotebook.com). Readable case write-ups: [Mythos 5](https://factnotebook.com/audits/mythos-5) · [Goncourt / Orélien — AI contribution](https://factnotebook.com/audits/goncourt-orelien) · [Structured vs primary record](https://factnotebook.com/audits/structured-vs-primary-record) · [NeoMundi ControlTower pilot](https://factnotebook.com/audits/neomundi/neomundi-controltower-pubmedqa-pilot-v01/).
 
 Public, inspectable **outputs** from bounded FactNotebook reconstructions.
 Publication of a reconstruction does **not** imply publication of the reconstruction engine. Each artifact declares its observation surface, proposition, result, provenance, limitations and custody information — what FactNotebook asserts and on what, not how it computes.
@@ -13,5 +13,6 @@ This registry is **not open source**: the reconstruction engine, models and read
 |---|---|---|
 | [FN-ANTH-M5-001](FN-ANTH-M5-001/) | Anthropic "Mythos 5" cyber-evaluation incident (public record) | declared boundary ESTABLISHED · actual boundary CONTRADICTED · internal belief CANNOT ESTABLISH · record completeness CONTRADICTED · universal material sufficiency CANNOT ESTABLISH |
 | [FN-NEOMUNDI-CTPUBMEDQA-001](FN-NEOMUNDI-CTPUBMEDQA-001/) | NeoMundi ControlTower pilot — 5 governed GPT-4o generations on PubMedQA (real data) | independent reconstruction of declared-vs-observed governance; NOT ASSESSABLE preserved where no observation channel exists; ingest externally anchored (RFC-3161 / DigiCert) |
+| [FN-JAFAR-BUNIA-001](FN-JAFAR-BUNIA-001/) | External AI-safety field-testing records (health-guidance, low-resource / outbreak context; models anonymized) | bounded proposition-level states; a structured/primary-record divergence caught at verification → rebound to the primary surface; an absent variant held CANNOT ESTABLISH. Method + outcome only — underlying records are **private and consented**, not published |
 
 Each reconstruction is retrospective and non-dispositive: it reconstructs what the available observations permit one to establish, and leaves the decision with the accountable authority.
