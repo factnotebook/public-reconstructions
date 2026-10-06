@@ -1,0 +1,347 @@
+{
+  "case_id": "FN-C2PA-PIOTR-001",
+  "title": "C2PA provenance across four hops — admission pass (signed ≠ delivered ≠ instrument ≠ published)",
+  "prepared_for": "Admission pass — Piotr Reder (eucomplyhub) as independent admission authority (2026-10-02)",
+  "reconstruction_id": "FN-785efaab56d2e1f7",
+  "engine_version": "0.9.0",
+  "status": "FINAL — BOUNDED",
+  "observation_surface": {},
+  "propositions": [
+    {
+      "id": "H1-openai-declared",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the case-3 manifest DECLARES the claim generator 'OpenAI Media Service API' and a signing certificate (subject CN 'OpenAI Media Service', issuer 'OpenAI OpCo, LLC'), signed 2026-09-28T15:40:40Z",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "case3 c2patool: claim_generator_info.name 'OpenAI Media Service API'; signature_info.common_name 'OpenAI Media Service'; signature_info.issuer 'OpenAI OpCo, LLC'. NB issuer = the signing certificate's issuer, not necessarily the signing entity — the two are not asserted to be the same"
+    },
+    {
+      "id": "H1-ai-source-declared",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the case-3 manifest DECLARES the image as AI-generated (digitalSourceType trainedAlgorithmicMedia; c2pa.created by ChatGPT/gpt-image)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "case3 c2patool: actions.v2 c2pa.created, digitalSourceType=…/trainedAlgorithmicMedia"
+    },
+    {
+      "id": "H1-flux-declared",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the case-1 SIGNED manifest declares Black Forest Labs / FLUX.2 as the generating model (claim generator 'Black Forest Labs API'; softwareAgent + modelName 'FLUX.2')",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "case1 c2patool: claim_generator_info 'Black Forest Labs API'; modelName 'FLUX.2'; issuer 'Black Forest Labs Inc.'"
+    },
+    {
+      "id": "H1-fal-declared",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the case-2 SIGNED manifest declares fal.ai as claim generator and softwareAgent, with NO model named (issuer 'fal - Features & Labels Inc.')",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "case2 c2patool: claim_generator_info 'fal.ai'; softwareAgent 'fal.ai'; assertion label 'ai.fal.info'; no modelName field"
+    },
+    {
+      "id": "H1-zimage-readme-declared",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the pack README labels case-2 'fal, Z-Image' (results table and folder name case2_higgsfield_fal_zimage) — Piotr's record of the model he selected in Higgsfield, not a statement from the signed manifest",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "README results table + folder name 'case2_higgsfield_fal_zimage' — a SELECTION-RECORD channel (what Piotr selected in Higgsfield), distinct from the signed manifest (which names only fal.ai). ADMITTED by Piotr (editorial change; subject, channel, grade and scope unchanged)"
+    },
+    {
+      "id": "H1-zimage-in-manifest",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the case-2 SIGNED manifest establishes the generating model as 'Z-Image'",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "CANNOT ESTABLISH — 'Z-Image' is NOT in the signed manifest (which names only fal.ai, no model); the model identity rests on the README / Higgsfield selection record, a channel distinct from the signed declaration. Reason class: evidence/relationship (asserted on a different channel from the one that is signed)"
+    },
+    {
+      "id": "H1-openai-produced-established",
+      "section": "Hop 1 — Signed state (declaration)",
+      "statement": "the signed manifest ESTABLISHES that OpenAI actually produced this image (declaration → truth)",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "a manifest is a DECLARATION, graded as a declaration; the signing credential is untrusted under the run config (no trust list) and no independent production-record channel is admitted — declared ≠ established"
+    },
+    {
+      "id": "H2-delivered-valid",
+      "section": "Hop 2 — Delivered / representation",
+      "statement": "the delivered PNG (cases 1–2) passes the C2PA data-hash integrity check (a valid C2PA artefact UNDER that check)",
+      "state": "CONTRADICTED",
+      "reason": null,
+      "basis": "CONTRADICTED by the C2PA data-hash check on the delivered bytes (assertion.dataHash.mismatch → Invalid) — an instrument-independent hash comparison. Scoped to that check, not an absolute 'valid file' property (Hop 3 holds the version/trust half of 'Valid' separately)"
+    },
+    {
+      "id": "H2-delivered-differs-by-chunk",
+      "section": "Hop 2 — Delivered / representation",
+      "statement": "the delivered PNG differs from the validating representation by one identified tEXt('hf-job-id') chunk — removing that chunk restores the c2pa DATA-HASH MATCH",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "chunk_order.txt: delivered = IHDR tEXt(hf-job-id) caBX IDAT… IEND vs removed = IHDR caBX IDAT… IEND; after removal the c2pa.hash.data matches (instrument-independent). The full 'Valid' verdict ALSO depends on the certificate/trust half (config-dependent — Hop 3); cases 1–2 are Valid on both core 0.90 and 0.91 (nothing further isolated). 'Content' here = bytes covered by the data hash (a tEXt chunk), not the rendered pixels; this does not establish who produced or signed the underlying image"
+    },
+    {
+      "id": "H2-injection-actor",
+      "section": "Hop 2 — Delivered / representation",
+      "statement": "Higgsfield is the actor that injected the hf-job-id chunk into the delivered file",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "Piotr's INFERENCE from the chunk's name and value; README 'Not claimed' — Higgsfield has not confirmed it. Reason class: evidence/relationship (a confirmation could resolve it)"
+    },
+    {
+      "id": "H2-thumbnail-provenance",
+      "section": "Hop 2 — Delivered / representation",
+      "statement": "the provenance of the delivered thumbnail (webp) can be established from the delivered bytes",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "c2patool on 3_thumbnail_as_delivered.webp: 'No claim found' — a distinct representation with no provenance channel. Reason class: evidence/relationship (no channel on this artefact)"
+    },
+    {
+      "id": "H3-c2patool-valid",
+      "section": "Hop 3 — Instrument",
+      "statement": "c2patool 0.27.22 with no trust list returned Valid for case 3 (signingCredential.untrusted only)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "case3 c2patool.txt: validation_state 'Valid'; only failure code signingCredential.untrusted"
+    },
+    {
+      "id": "H3-intrinsic-valid",
+      "section": "Hop 3 — Instrument",
+      "statement": "the case-3 export is valid as an INSTRUMENT-INDEPENDENT property of the file",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "CANNOT ESTABLISH — reason class: INSTRUMENT / under-characterisation. The verdict is a function of validator version and trust configuration, not of the bytes alone (see H3-verdict-version-dependent). Pinning the validator version + config does NOT establish intrinsic validity — it establishes a DIFFERENT, instrument-relative proposition ('valid under validator X, config Y'); instrument-independent validity stays CANNOT ESTABLISH"
+    },
+    {
+      "id": "H3-verdict-version-dependent",
+      "section": "Hop 3 — Instrument",
+      "statement": "the case-3 validity verdict DEPENDS on validator version + trust config (c2pa-core 0.90.0 Valid; 0.91.0 Invalid 'certificate missing required EKU'; Valid again with an OpenAI EKU OID allow-listed)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "DISCOVERY stays attributed to Hlias Staurou. ADMITTED here via Piotr's OWN macOS reproduction (c2pa-python 0.37 & 0.38, core 0.90 & 0.91), case 3 v2 — his v1 run matched Hlias's log line-for-line. Which certificate in the chain 0.91 rejects on (leaf / intermediate / TSA) was NOT isolated; no judgment on whether the 0.91 change is correct. Cases 1–2: Valid on both versions"
+    },
+    {
+      "id": "H4-served-carries-manifest",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "the LinkedIn-served image bytes — the six size variants inspected 2026-09-29 — carry an in-file C2PA manifest",
+      "state": "CONTRADICTED",
+      "reason": null,
+      "basis": "CONTRADICTED by Piotr's in-page inspection of six served size variants (2026-09-29, 20–1280px): progressive JPEG, JFIF only, no APP11/JUMBF segment, no OpenAI reference. (Piotr did NOT record a 'c2pa' string search; the zero jumb/'c2pa' byte-scan on the 480×599 variant is Hlias's and stays his, not admitted here.) No APP11/JUMBF segment ⇒ no in-file C2PA manifest. ADMITTED by Piotr after a substantive change — final characterization confirmed by Piotr; FactNotebook incorporated the revised wording (admission is Piotr's, not FN's)"
+    },
+    {
+      "id": "H4-content-match",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "the LinkedIn-served 480×599 JPEG is the same image as the case-3 export, downscaled (content match)",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "CANNOT ESTABLISH in this admitted reconstruction — the only support was Hlias Staurou's PSNR measurement (served 480×599 vs v2 export = 32 dB vs ~8 dB controls), which Piotr did not run and did not admit on Hlias's behalf. It remains a DECLARED EXTERNAL RESULT attributed to Hlias; with no admitted observation, the content-match is not established here. (It was ESTABLISHED in the FN-admitted version FN-ce30f1089141d0fa; the authority's decision changes the state — this is No Exempt Node, demonstrated not declared.)"
+    },
+    {
+      "id": "H4-served-from-exact-bytes",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "the served JPEG was produced from those exact signed bytes",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "the PSNR establishes content-match + manifest-absence, NOT byte-provenance: 'same image downscaled' ≠ 'came from those exact bytes'. Reason class: evidence/relationship"
+    },
+    {
+      "id": "H4-badge-other-image",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "on a SEPARATE ChatGPT image (posted 2026-10-01, not the case-3 post), the LinkedIn 'cr' badge DISPLAYS manifest data (OpenAI Media Service API; OpenAI OpCo, LLC; issued 2026-10-01)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "Piotr opened the 'cr' badge 2026-10-01 on a different image — directly observed display (same Polish LinkedIn UI, same labels, issued 2026-10-01). ONLY the display is established here: that image's served bytes were NOT inspected, so whether they lack the manifest is NOT established for this image. The displayed ≠ in-file conclusion rests on case 3 (H4-badge-displays-case3). ADMITTED by Piotr"
+    },
+    {
+      "id": "H4-badge-displays-case3",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "on the case-3 post itself, the LinkedIn 'cr' badge DISPLAYS provenance values matching the case-3 manifest (app OpenAI Media Service API; publisher OpenAI OpCo, LLC; issued 2026-09-28)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "Piotr opened the case-3 post badge on 2026-10-01 (the served-bytes inspection was 2026-09-29): app OpenAI Media Service API, publisher OpenAI OpCo, LLC, issued 2026-09-28 — matching the case-3 manifest FIELDS (badge app = claim_generator 'OpenAI Media Service API'; badge publisher = signature_info.issuer 'OpenAI OpCo, LLC'; issued = signed date 2026-09-28). Viewed in the Polish LinkedIn UI: 'Używana aplikacja lub urządzenie: OpenAI Media Service API', 'Publikujący: OpenAI OpCo, LLC', 'Wydano 28 września 2026' (English rendering faithful). On the SAME image LinkedIn DISPLAYS the manifest's data while the served file carries no manifest — displayed ≠ in-file, on case 3 itself. ADMITTED by Piotr"
+    },
+    {
+      "id": "H4-badge-reads-embedded",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "the case-3 'cr' badge reads the displayed values from a C2PA manifest embedded in the served JPEG",
+      "state": "CONTRADICTED",
+      "reason": null,
+      "basis": "CONTRADICTED within the scope of the inspected files: the served bytes carry no manifest (H4-served-carries-manifest), so there is no embedded manifest in the served JPEG for the badge to read from"
+    },
+    {
+      "id": "H4-badge-source-unknown",
+      "section": "Hop 4 — Publication hop (LinkedIn)",
+      "statement": "the source the case-3 badge reads these displayed values from is established",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "that the badge SHOWS these values is observed (H4-badge-displays-case3); reading from an embedded manifest in the served JPEG is excluded (H4-badge-reads-embedded CONTRADICTED); the ACTUAL source it uses (a LinkedIn-side store, the original upload, …) remains unobserved. Reason class: evidence/relationship"
+    }
+  ],
+  "candidate_admission_register": [
+    {
+      "status": "admitted",
+      "candidate": "OBS-C2PA-001",
+      "subject": "selection-record:readme",
+      "predicate": "readme_declares_zimage",
+      "primary_record": "pack README (results table + folder name)",
+      "decided_by": "Piotr Reder",
+      "admission_rule": "faithful to reviewer's own records (editorial change)",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "admitted",
+      "candidate": "OBS-C2PA-002",
+      "subject": "delivered:case12",
+      "predicate": "delivered_differs_by_identified_text_chunk",
+      "primary_record": "chunk_order.txt",
+      "decided_by": "Piotr Reder",
+      "admission_rule": "faithful to reviewer's own records",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "admitted",
+      "candidate": "OBS-C2PA-003",
+      "subject": "published:linkedin",
+      "predicate": "served_bytes_no_manifest",
+      "primary_record": "Piotr in-page inspection 2026-09-29 (6 variants)",
+      "decided_by": "Piotr Reder",
+      "admission_rule": "faithful to reviewer's records (substantive change; final characterization confirmed by Piotr)",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "admitted",
+      "candidate": "OBS-C2PA-004",
+      "subject": "published:linkedin",
+      "predicate": "badge_displays_case3_matching_manifest",
+      "primary_record": "Piotr badge inspection 2026-10-01 (Polish UI)",
+      "decided_by": "Piotr Reder",
+      "admission_rule": "faithful to reviewer's records",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "admitted",
+      "candidate": "OBS-C2PA-005",
+      "subject": "published:linkedin",
+      "predicate": "badge_displays_manifest_other_image",
+      "primary_record": "Piotr badge inspection 2026-10-01 (separate image, Polish UI)",
+      "decided_by": "Piotr Reder",
+      "admission_rule": "faithful to reviewer's records",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "admitted",
+      "candidate": "H-DIV",
+      "subject": "instrument:c2pa-core",
+      "predicate": "verdict_depends_on_version_eku",
+      "primary_record": "Piotr macOS reproduction (c2pa-python 0.37/0.38, core 0.90/0.91)",
+      "decided_by": "Piotr Reder",
+      "admission_rule": "own reproduction within its limits; discovery attributed to Hlias Staurou",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "outside-admission-scope",
+      "candidate": "H-PSNR",
+      "subject": "published:linkedin",
+      "predicate": "served_is_same_image_downscaled",
+      "primary_record": "Hlias PSNR: served 480×599 vs v2 export = 32 dB (controls ~8 dB)",
+      "acquisition_method": "Hlias's measurement",
+      "admission_rule": "outside Piotr's admission authority (Hlias's measurement)",
+      "reason": "a declared external result attributed to Hlias; NOT held pending Piotr's decision — it enters only via Hlias's own authority path (direct confirmation). Its non-admission is why H4-content-match is CANNOT ESTABLISH",
+      "decided_by": "Piotr Reder",
+      "at": "2026-10-02"
+    },
+    {
+      "status": "outside-admission-scope",
+      "candidate": "c2pa-string byte-scan",
+      "subject": "published:linkedin",
+      "predicate": "served_bytes_contain_no_c2pa_string",
+      "primary_record": "Hlias byte-scan on the 480×599 variant",
+      "acquisition_method": "Hlias's measurement",
+      "admission_rule": "outside Piotr's admission authority (Hlias's measurement)",
+      "reason": "Hlias's scan; Piotr recorded no 'c2pa' string search, so it is kept out of OBS-C2PA-003 and enters only via Hlias's own authority path",
+      "decided_by": "Piotr Reder",
+      "at": "2026-10-02"
+    }
+  ],
+  "extraction_divergences": [],
+  "derivation_model": null,
+  "model_divergences": [],
+  "acquisition_boundary": {
+    "surface_type": "independently_supplied",
+    "constituted_by": "Piotr Reder (eucomplyhub) — public C2PA fixture pack v2",
+    "submission_form": "supplied fixture set (3 cases, c2patool outputs, chunk_order, SHA256SUMS)",
+    "from_surface": "",
+    "procedure": "",
+    "acquisition_mode": "selective",
+    "period": "",
+    "permissions": "",
+    "extraction_instrument": "c2patool 0.27.22 (Piotr's run, no trust list) — re-read here, not re-run",
+    "admission_authority": "Piotr Reder (eucomplyhub) — INDEPENDENT admission authority, within the records he can verify (admission register, 2026-10-02): he admitted/changed each interpretive candidate against his own records and marked anything outside that scope. FactNotebook retains extraction, traceability and execution. Direct records (FN's SHA-256 7/7; Piotr's preserved c2patool outputs) enter without a separate admission step. Hlias Staurou's measurements stay his: the 0.90/0.91 divergence entered via Piotr's own reproduction (discovery Hlias); the PSNR was NOT admitted (declared external result)",
+    "limitations": "Bounded to the supplied pack. Pack primaries (files + SHA256SUMS) re-verified by FN (7/7 OK) → A2. c2patool VERDICTS are Piotr's runs, re-read not re-executed. Interpretive candidates were ADMITTED by Piotr within his verifiable records; Hlias's PSNR was not admitted, so the content-match is CANNOT ESTABLISH here (a declared external result). This establishes what the admitted record permits — not the underlying facts about who produced or altered the images. Decisions recorded in the accompanying admission register (Piotr Reder, 2026-10-02)."
+  },
+  "coverage_note": "Records were supplied by an independent source (Piotr Reder (eucomplyhub) — public C2PA fixture pack v2). Completeness beyond the supplied surface is not established. The instrumentation was **selective**, not exhaustive: a selective extraction is not an exhaustive observation of the surface.",
+  "references": [
+    {
+      "tag": "C2PA fixture pack v2 (Piotr Reder, eucomplyhub)",
+      "status": "PRIMARY — supplied; SHA256SUMS re-verified here (7/7 OK)",
+      "source": "3 cases: case1 manifest names BFL/FLUX.2; case2 manifest names fal.ai with NO model ('Z-Image' is the README selection-record, not the signed manifest); case3 OpenAI ChatGPT export. Delivered PNGs Invalid (dataHash.mismatch) · chunk_removed data-hash matches · thumbnails No-claim · case3 Valid (no trust list)",
+      "url": "supplied via iCloud 2026-09-30 (c2pa_fixtures_2026-09-30_v2)"
+    },
+    {
+      "tag": "case3 c2patool output",
+      "status": "PRIMARY — in pack (c2patool 0.27.22, no trust list)",
+      "source": "validation_state Valid; claim generator 'OpenAI Media Service API'; signing cert subject CN 'OpenAI Media Service', issuer 'OpenAI OpCo, LLC'; digitalSourceType trainedAlgorithmicMedia; signed 2026-09-28T15:40:40Z; SHA-256 f564e3e0…b1f",
+      "url": "case3_chatgpt_linkedin/1_as_generated_chatgpt.png.c2patool.txt"
+    },
+    {
+      "tag": "Validator version divergence (case 3)",
+      "status": "ADMITTED via Piotr's macOS reproduction (c2pa-python 0.37 & 0.38, core 0.90 & 0.91); discovery Hlias Staurou; not run by FactNotebook",
+      "source": "case 3: c2pa-core 0.90.0 Valid; 0.91.0 Invalid 'certificate missing required EKU'; Valid again with an OpenAI EKU OID allow-listed. Which certificate (leaf/intermediate/TSA) 0.91 rejects on was NOT isolated; no judgment on whether the 0.91 change is correct. Cases 1–2: Valid on both versions",
+      "url": "LinkedIn thread (eucomplyhub)"
+    },
+    {
+      "tag": "LinkedIn publication hop",
+      "status": "ADMITTED by Piotr (served bytes + badge); Hlias's PSNR NOT admitted",
+      "source": "served bytes (Piotr, 2026-09-29, 6 variants): progressive JPEG, JFIF only, no APP11/JUMBF, no OpenAI reference (Piotr recorded no 'c2pa' string search; the zero jumb/'c2pa' byte-scan on the 480×599 variant is Hlias's, not admitted). Badge (Piotr, Polish UI): case-3 post 'cr' shows OpenAI Media Service API / OpenAI OpCo, LLC / issued 2026-09-28 — matching the case-3 manifest, while the served file carries none; corroborated on a separate image (issued 2026-10-01). PSNR content-match (Hlias) = declared external result, NOT admitted → content-match CANNOT ESTABLISH",
+      "url": "https://www.linkedin.com/posts/piotrreder_c2pa-contentcredentials-aiact-share-7510335661502242817-UlVG/"
+    }
+  ],
+  "binding": {
+    "observation_model": {
+      "id": "FN-C2PA-PIOTR-001",
+      "version": null,
+      "hash": "sha256:b3c2424db8d332ab1e9e066f9bb856ae3114382ae754e00355f28ecc1dced366"
+    },
+    "policy": null,
+    "engine": {
+      "engine_version": "fn-reconstruction-engine-v1",
+      "rule_language_version": "fn-rule-pattern-v1",
+      "composition_version": "fn-composition-v1",
+      "temporal_policy_version": "fn-temporal-v1",
+      "canonicalization_version": "fn-canon-v1"
+    },
+    "observation_set": {
+      "hash": "sha256:25f4b0d58d581db9693791031f2dfef85a25e18efc59aafc4fc7be77c970c222",
+      "selected_count": 12,
+      "excluded_by_window": 0,
+      "window": null,
+      "custody_verified": false,
+      "closed_at": "2026-10-02T10:57:08+00:00",
+      "selected_ids": [
+        "o_28efd18129dd37ee",
+        "o_2b830104624beb36",
+        "o_4df1dac2d17b4a9d",
+        "o_519a5163584c786d",
+        "o_7e5af7a07c26b274",
+        "o_931dcb1f9b735c26",
+        "o_9d0d638d2646c04f",
+        "o_aa4da8c716dd3c15",
+        "o_ac416419bc904e2c",
+        "o_bb8b04102e34c031",
+        "o_c50bb01ea0d82129",
+        "o_f118d2393f5f91bd"
+      ],
+      "excluded_ids": [],
+      "selection_note": "bounded observation SELECTION by t_event; not temporal inference over the interval"
+    }
+  }
+}
