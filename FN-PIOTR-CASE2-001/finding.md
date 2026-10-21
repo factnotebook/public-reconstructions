@@ -18,7 +18,7 @@ One integrity-verified synthetic bundle. The MANIFEST.sha256 (over eight evidenc
 
 ## Scope & coverage
 
-Records were constituted and supplied by the controller (synthetic) — Piotr Reder's case-2 pack, submitted to FactNotebook as one bundle of logs, heartbeats, anchors, config and incident metadata, and admitted without selective exclusion of candidate observations — all extracted candidates were admitted. This finding is bounded to that submitted surface; the absence of internal selection does not establish the submission's completeness relative to the represented system, nor whether an adverse class of observations was withheld — that completeness is **not established**.
+The whole bundle was submitted by the controller (synthetic) — Piotr Reder's case-2 pack, submitted to FactNotebook as one bundle of logs, heartbeats, anchors, config and incident metadata — no selective acquisition. Of the candidates read from it, 6 were admitted as observations and 1 considered and **not admitted** (see Annex B). This finding is bounded to that submitted surface; neither its completeness relative to the represented system, nor the discovery of every potentially relevant observation, is established.
  *(see Annex C — acquisition / selection boundary; Annex B — non-admitted candidate register)*
 
 ## Results
@@ -113,7 +113,7 @@ Two levels are preserved. **The finding** re-derives: re-running the reconstruct
 
 ### C. Acquisition / selection boundary
 
-Records were constituted and supplied by the controller (synthetic) — Piotr Reder's case-2 pack, submitted to FactNotebook as one bundle of logs, heartbeats, anchors, config and incident metadata, and admitted without selective exclusion of candidate observations — all extracted candidates were admitted. This finding is bounded to that submitted surface; the absence of internal selection does not establish the submission's completeness relative to the represented system, nor whether an adverse class of observations was withheld — that completeness is **not established**.
+The whole bundle was submitted by the controller (synthetic) — Piotr Reder's case-2 pack, submitted to FactNotebook as one bundle of logs, heartbeats, anchors, config and incident metadata — no selective acquisition. Of the candidates read from it, 6 were admitted as observations and 1 considered and **not admitted** (see Annex B). This finding is bounded to that submitted surface; neither its completeness relative to the represented system, nor the discovery of every potentially relevant observation, is established.
 
 *Chain of custody of how the observation surface became a reconstruction — each actor plays a distinct role:*
 
@@ -128,7 +128,7 @@ Records were constituted and supplied by the controller (synthetic) — Piotr Re
 | Property | Value |
 |---|---|
 | Surface type | submitted |
-| Acquisition mode | submitted bundle — no candidate selection |
+| Acquisition mode | submitted bundle — no selective acquisition (admission decisions in Annex A/B) |
 | Period | exposure window 2026-09-03T00:00:00Z .. 08:05:00Z (commit_pushed .. key_revoked) |
 | Known limitations | Synthetic data, one scenario, five records, results per ROW (a data subject may appear in several tables; DS ids are carried but persons are not reconstructed here). Integrity is verified; independence and path completeness are NOT — path completeness is declared in incident.json; the bundle shows access by other actors, but does not establish distinct technical paths or demonstrate that every path available to the exposed credential was observed. Clock trust and attestor independence remain outside the independently verified scope. Logger capture completeness is explicitly considered (it is the second limit on R-A) but is not established by heartbeat evidence — liveness is not capture. No legal finding on notification is made. |
 
@@ -136,4 +136,4 @@ Records were constituted and supplied by the controller (synthetic) — Piotr Re
 
 - **Engine** camsva 0.9.0
 - **Reconstruction ID** `FN-8c66ed94f110fa24`
-- **Binding** `{'observation_model': {'id': 'FN-PIOTR-CASE2-001', 'version': None, 'hash': 'sha256:1ac82995fa7417f2d0cc756ac85e890674fa55d7d92ae8a7b59655491b258899'}, 'policy': None, 'engine': {'engine_version': 'fn-reconstruction-engine-v1', 'rule_language_version': 'fn-rule-pattern-v1', 'composition_version': 'fn-composition-v1', 'temporal_policy_version': 'fn-temporal-v1', 'canonicalization_version': 'fn-canon-v1'}, 'observation_set': {'hash': 'sha256:8d29be6e0f1fdffc356ee8ecc9955c8d665e50d4d8a7c9e30e108b86ecca23f7', 'selected_count': 6, 'excluded_by_window': 0, 'window': None, 'custody_verified': False, 'closed_at': '2026-10-21T08:23:57+00:00', 'selected_ids': ['o_1590b50510a54dd7', 'o_4bd93f802edbac6b', 'o_b779a74760231048', 'o_c491c45999abd2c7', 'o_c5dbded8e89015b9', 'o_c91a28a6f6e00843'], 'excluded_ids': [], 'selection_note': 'bounded observation SELECTION by t_event; not temporal inference over the interval'}}`
+- **Binding** `{'observation_model': {'id': 'FN-PIOTR-CASE2-001', 'version': None, 'hash': 'sha256:1ac82995fa7417f2d0cc756ac85e890674fa55d7d92ae8a7b59655491b258899'}, 'policy': None, 'engine': {'engine_version': 'fn-reconstruction-engine-v1', 'rule_language_version': 'fn-rule-pattern-v1', 'composition_version': 'fn-composition-v1', 'temporal_policy_version': 'fn-temporal-v1', 'canonicalization_version': 'fn-canon-v1'}, 'observation_set': {'hash': 'sha256:8d29be6e0f1fdffc356ee8ecc9955c8d665e50d4d8a7c9e30e108b86ecca23f7', 'selected_count': 6, 'excluded_by_window': 0, 'window': None, 'custody_verified': False, 'closed_at': '2026-10-21T08:50:01+00:00', 'selected_ids': ['o_1590b50510a54dd7', 'o_4bd93f802edbac6b', 'o_b779a74760231048', 'o_c491c45999abd2c7', 'o_c5dbded8e89015b9', 'o_c91a28a6f6e00843'], 'excluded_ids': [], 'selection_note': 'bounded observation SELECTION by t_event; not temporal inference over the interval'}}`

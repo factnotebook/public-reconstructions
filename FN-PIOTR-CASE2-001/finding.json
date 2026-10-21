@@ -271,14 +271,14 @@
     "submission_form": "one integrity-sealed bundle (MANIFEST.sha256 over eight evidence files + assess.py + build_evidence.py + README.md = 11); 11/11 digests recomputed here and matched",
     "from_surface": "",
     "procedure": "",
-    "acquisition_mode": "submitted bundle — no candidate selection",
+    "acquisition_mode": "submitted bundle — no selective acquisition (admission decisions in Annex A/B)",
     "period": "exposure window 2026-09-03T00:00:00Z .. 08:05:00Z (commit_pushed .. key_revoked)",
     "permissions": "",
     "extraction_instrument": "FactNotebook re-reads the bundle and re-derives every driving fact independently (heartbeat coverage per logger, the call-level query / postcode match, the chain structure, the recorded read). It does NOT re-run the controller's systems and does NOT re-use the controller's assess.py to reach its states",
     "admission_authority": "FactNotebook (proposer). Integrity (SHA-256 over the whole bundle) is kept distinct from independence and from completeness: the bundle is the controller's own, so its completeness and independence are declared, not established — a submitted surface is never read as the world. Not an independent audit of the controller",
     "limitations": "Synthetic data, one scenario, five records, results per ROW (a data subject may appear in several tables; DS ids are carried but persons are not reconstructed here). Integrity is verified; independence and path completeness are NOT — path completeness is declared in incident.json; the bundle shows access by other actors, but does not establish distinct technical paths or demonstrate that every path available to the exposed credential was observed. Clock trust and attestor independence remain outside the independently verified scope. Logger capture completeness is explicitly considered (it is the second limit on R-A) but is not established by heartbeat evidence — liveness is not capture. No legal finding on notification is made."
   },
-  "coverage_note": "Records were constituted and supplied by the controller (synthetic) — Piotr Reder's case-2 pack, submitted to FactNotebook as one bundle of logs, heartbeats, anchors, config and incident metadata, and admitted without selective exclusion of candidate observations — all extracted candidates were admitted. This finding is bounded to that submitted surface; the absence of internal selection does not establish the submission's completeness relative to the represented system, nor whether an adverse class of observations was withheld — that completeness is **not established**.",
+  "coverage_note": "The whole bundle was submitted by the controller (synthetic) — Piotr Reder's case-2 pack, submitted to FactNotebook as one bundle of logs, heartbeats, anchors, config and incident metadata — no selective acquisition. Of the candidates read from it, 6 were admitted as observations and 1 considered and **not admitted** (see Annex B). This finding is bounded to that submitted surface; neither its completeness relative to the represented system, nor the discovery of every potentially relevant observation, is established.",
   "references": [
     {
       "tag": "Case-2 synthetic bundle (controller-supplied), integrity-verified",
@@ -355,7 +355,7 @@
       "excluded_by_window": 0,
       "window": null,
       "custody_verified": false,
-      "closed_at": "2026-10-21T08:23:57+00:00",
+      "closed_at": "2026-10-21T08:50:01+00:00",
       "selected_ids": [
         "o_1590b50510a54dd7",
         "o_4bd93f802edbac6b",
