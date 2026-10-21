@@ -1,0 +1,227 @@
+{
+  "case_id": "FN-CUSTOS-003",
+  "title": "A detected regression, bounded: the action gate under a blind pre-registered injection",
+  "prepared_for": "Tavares Heath — third reconstruction (run 11, sabotage 003): a detected regression on a blind, pre-registered run",
+  "reconstruction_id": "FN-f626b9c8becace9f",
+  "engine_version": "0.9.0",
+  "status": "Reconstruction: FINAL — BOUNDED (closed against the specified admitted observation set and reconstruction rules; it does NOT establish completeness, independent production of the records, or the absence of other relevant evidence). Publication: PENDING SUBJECT REVIEW",
+  "observation_surface": {},
+  "propositions": [
+    {
+      "id": "P1-verdict-follows-rule",
+      "section": "1 — What the record establishes",
+      "statement": "the recorded verdict RED-CONFIRMED follows the declared verdict rule (pytest_exit_code != 0 -> RED-CONFIRMED) applied to the recorded exit code (1)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "ESTABLISHED. From the record (frozen in-repo, re-hashed here against MANIFEST.md): pytest_exit_code = 1; rule 'exit_code != 0 -> RED-CONFIRMED'; verdict = RED-CONFIRMED. 1 != 0 => RED-CONFIRMED. Internal consistency of the record — same check as run-9/v3 P1. The record's digests are re-hashed here against the frozen MANIFEST.md (match)"
+    },
+    {
+      "id": "P2-modification-recorded",
+      "section": "1 — What the record establishes",
+      "statement": "the submitted record contains a sealed description of the intended modification, identified by a SHA-256 value and referenced by the run identity",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "ESTABLISHED — as a DOCUMENTARY relation, not as execution. The record carries a sealed post-injection diff whose SHA-256 (74456f76…) is referenced by the run identity (injection_diff_sha256) — 'sealed' here means a SHA-256 byte-commitment bound into the record identity, not a separately-demonstrated temporal seal or independent custody; the diff describes the authority check in custos/action_gate.py weakened so an un-registered tool proceeds. What this establishes is that the record CONTAINS and BINDS a description of the intended modification — NOT that the modified code was the code executed (a hash records a description, it does not prove executed == diffed; FactNotebook does not re-run). A stronger 'the modification was executed' proposition would need an additional basis (e.g. before/after execution evidence) and is not claimed here. The 74456f76… value was re-hashed here from the frozen in-repo patch and matches the directory manifest"
+    },
+    {
+      "id": "P3-probe-delta",
+      "section": "1 — What the record establishes",
+      "statement": "the submitted clean and injected probe records report DENY and ALLOW, respectively, for an identically-specified request",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "ESTABLISHED — a documentary/observational proposition about the two probe records (both re-hashed here = match the frozen manifest). On the same request (tool 'payment_transfer', un-registered, tenant 'probe_tenant_003'), the CLEAN phase records allowed=false / deny with the rule action_gate_tool_not_allowlisted FIRED, and the INJECTED phase records allowed=true with NO rule fired (triggered_rule null, 'No policy violations detected'). The injected artifact carries run_id + injection_diff_sha256 (74456f76…); the clean artifact carries null ONLY in the injection_diff_sha256 field (both artifacts carry the same run-identity fields — the clean phase simply has no injection to reference). This clean/injected pairing is far stronger than a single post-injection test — but it is a statement about the two RECORDED decisions, not yet a causal claim about the modification (that is P4-violation-attribution)"
+    },
+    {
+      "id": "P4-violation-attribution",
+      "section": "2 — What the record cannot establish (yet)",
+      "statement": "the injected modification is the determining cause of the ALLOW — i.e. a control violation exercised and causally attributable to this injection",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "evidence of tracked-state equivalence (one-line diff, same job/commit f5d48c9); clean-probe code not hash-bound + untracked/env deltas not excluded -> bounded inference, not observation (forward run 38811246068 adds instrumentation for that gap — a separate reconstruction, not determined here)",
+      "basis": "CANNOT ESTABLISH — the most interesting boundary of 003, and now a PRECISE one rather than an assumed gap. The frozen record carries real equivalence evidence, which this reconstruction weighed: both probe artifacts record the same run_id (38610363998) — sequential steps of one CI job, same runner workspace, same checkout of commit f5d48c9; the sealed diff enumerates the complete set of TRACKED-file changes between the two phases (one file, one line in custos/action_gate.py); and the probe constructs its tenant state in-process at that commit, so the applicable policy and state are specified by the probe script itself. That provides evidence of tracked-state equivalence. What it does NOT establish — and the frozen directory's README states this same boundary — is a hash-level binding of the CLEAN probe's executed code (the clean artifact predates the diff seal and carries no code-state hash) or the exclusion of untracked-file / environmental deltas within the job. So determining-cause is a BOUNDED INFERENCE across an enumerated one-line tracked diff within one job — strong, but not an observation. Held at CANNOT ESTABLISH; the subject explicitly accepts this. This is exactly '_what observations suffice to attribute a violation to a determined modification, independently of the test verdict?_'. FORWARD INSTRUMENTATION (not evaluated here): a subsequent run 38811246068 introduces additional per-probe instrumentation (each phase's own script SHA-256 and a `git status --porcelain` capture) intended to address this residual equivalence gap. Its effect on causal establishability requires a SEPARATE reconstruction and is not determined by this run-11 finding; run 11 stands as recorded. BOUNDARY regardless: even IF established, an ALLOW would be a violation at the authorization-DECISION boundary — the gate permitting what it should deny — NOT that the tool executed or that a real-world effect occurred (the same line drawn in the Sovereign Veritas X5 case)."
+    },
+    {
+      "id": "P5-detection-scoped",
+      "section": "1 — What the record establishes",
+      "statement": "the test suite detected this regression: the two identified action-gate allowlist assertions failed with the injected behaviour",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "ESTABLISHED, scoped. The full suite ran without -x: 518 cases, 2 failed, exit 1. The two failing tests are the intended assertions of this class — TestFailClosed::test_unregistered_tenant_denies_all_tools and TestEvaluateActionAPI::test_endpoint_denies_unallowlisted_tool — and both failure messages assert the injected behaviour itself (allowed=True where deny is required), at two levels (fail-closed unit + API endpoint). IDENTIFICATION CRITERION: tests asserting that an un-registered tool is denied by the gate. What is ESTABLISHED is the NARROW proposition: these two named, executed assertions failed under the injection (directly in the JUnit). This is the 'detected' counterpart to run-9, where coverage of the class was CANNOT ESTABLISH under -x"
+    },
+    {
+      "id": "P6-universal-coverage",
+      "section": "2 — What the record cannot establish (yet)",
+      "statement": "RED-CONFIRMED establishes that the gate's authority enforcement is correct in general — that every authority-weakening regression would be detected",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "detection of THIS regression by two assertions; 30 other gate tests passed under this injection — a detected regression, not a clean bill of health",
+      "basis": "CANNOT ESTABLISH — and this boundary is on the record deliberately. The detection surface for THIS class is exactly the two assertions that failed; the other 30 dedicated gate tests passed under this injection (this reconstruction records that they passed, not a scope analysis of why they did). So RED-CONFIRMED is the detection of THIS regression at those two levels — not universal coverage of every possible authority weakening, and not a clean bill of health for the gate. Establishing the universal would require classifying the whole suite's scope against the space of authority weakenings, which this record does not do. 'Detected' is not 'exhaustively guarded'"
+    }
+  ],
+  "candidate_admission_register": [
+    {
+      "candidate": "obs-verdict",
+      "subject": "run:38610363998",
+      "predicate": "verdict_consistent_with_declared_rule",
+      "status": "admitted",
+      "primary_record": "003-weaken-action-gate/red-proof-evidence.json",
+      "primary_sha256": "53cf1126b0e3d92e27043e414f47685605e2d30f8ad0da7197d20a23cadecd2c",
+      "corroboration": {
+        "status": "single",
+        "instruments": [
+          "frozen CI record (run 38610363998)"
+        ],
+        "independence_class": "same-workflow"
+      },
+      "decided_by": "FactNotebook",
+      "admission_rule": "direct machine record; SHA-256 re-hashed vs MANIFEST.md (match); contributes to P1"
+    },
+    {
+      "candidate": "obs-modification",
+      "subject": "run:38610363998",
+      "predicate": "record_contains_sealed_modification_description",
+      "status": "admitted",
+      "primary_record": "003-weaken-action-gate/red-proof-injection-diff.patch",
+      "primary_sha256": "74456f767f1cba7c70c98f2705ec2873b92552f5000ba7777c6dbccfb8d60838",
+      "corroboration": {
+        "status": "single",
+        "instruments": [
+          "frozen CI record (run 38610363998)"
+        ],
+        "independence_class": "same-workflow"
+      },
+      "decided_by": "FactNotebook",
+      "admission_rule": "sealed diff (SHA-256-identified byte-commitment) re-hashed vs MANIFEST.md (match); contributes to P2"
+    },
+    {
+      "candidate": "obs-probe-delta",
+      "subject": "run:38610363998",
+      "predicate": "probe_delta_deny_clean_allow_injected",
+      "status": "admitted",
+      "primary_record": "003-probe/red-proof-probe-clean.json",
+      "primary_sha256": "b5951061545259536561b5829346651f499e755d599e672f7c6bbca1633dacfa",
+      "supporting": [
+        {
+          "record": "003-probe/red-proof-probe-injected.json",
+          "sha256": "5683de843dc4dd059156686029af713c68d1290f6637a51b321bcae7ca5eb670"
+        }
+      ],
+      "corroboration": {
+        "status": "single",
+        "instruments": [
+          "frozen CI record (run 38610363998)"
+        ],
+        "independence_class": "same-workflow"
+      },
+      "decided_by": "FactNotebook",
+      "admission_rule": "P3 compares TWO probe records on an identical request: clean (b5951061…, allowed=false / deny, rule action_gate_tool_not_allowlisted FIRED) and injected (5683de84…, allowed=true, no rule). Both re-hashed vs MANIFEST.md (match); both are required — the delta is the observation"
+    },
+    {
+      "candidate": "obs-detection",
+      "subject": "run:38610363998",
+      "predicate": "regression_detected_by_identified_assertions",
+      "status": "admitted",
+      "primary_record": "003-weaken-action-gate/red-proof-junit.xml",
+      "primary_sha256": "bffc84099f61f044351e3fb5c436156c05753a33ef71d9a0bbe90e42feaa7580",
+      "corroboration": {
+        "status": "single",
+        "instruments": [
+          "frozen CI record (run 38610363998)"
+        ],
+        "independence_class": "same-workflow"
+      },
+      "decided_by": "FactNotebook",
+      "admission_rule": "JUnit (+ pytest-output eb89afc7…) re-hashed vs MANIFEST.md (match); contributes to P5"
+    }
+  ],
+  "extraction_divergences": [],
+  "derivation_model": null,
+  "model_divergences": [],
+  "acquisition_boundary": {
+    "surface_type": "submitted",
+    "constituted_by": "Tavares Heath's CUSTOS-CORE red-proof CI (the SUBJECT; public repo ceyptoslim/CUSTOS-CORE, AGPL). The record is the subject's own CI output for a blind, pre-registered run; it is NOT a source independent of the subject",
+    "submission_form": "one public CI run (38610363998 / run 11, sabotage 003): evidence record, clean+injected probe decisions, JUnit (no -x), exit-code and sealed injection-diff — now frozen in-repo at docs/red-proof-records/run-38610363998/ (MANIFEST.md) and re-hashed here (match)",
+    "from_surface": "",
+    "procedure": "",
+    "acquisition_mode": "submitted bundle — no selective acquisition (admission decisions in Annex A/B)",
+    "period": "run 38610363998 (commit f5d48c9), workflow_dispatch on merged main, 2026-10-14",
+    "permissions": "",
+    "extraction_instrument": "the subject's CI (pytest under a known-bad sabotage patch verified against a frozen DESIGN.md hash, no -x; plus a control probe on clean + injected builds). FactNotebook re-reads the preserved record; it does NOT re-run the suite or the probe",
+    "admission_authority": "FactNotebook (proposer). Acquisition + integrity are kept distinct from independence and from relevance/sufficiency. The record is the subject's own (same-workflow corroboration, not mutual independence). The sealed diff (74456f76…), both probe artifacts, JUnit, pytest output and exit code were re-hashed here against the frozen MANIFEST.md and match. Not an independent audit",
+    "limitations": "Bounded to one blind, pre-registered run (38610363998 / run 11, sabotage 003) against ONE control (the pre-flight action gate). The run-11 set is now frozen in-repo (docs/red-proof-records/run-38610363998/, MANIFEST.md); the CITED digests (the injection diff 74456f76…, both probe artifacts, JUnit, pytest output and exit code) were re-hashed here and match — digest concordance only, i.e. the retrieved bytes match the manifest used. This does NOT by itself establish that the frozen set corresponds to the original CI run's own artifacts (that would need comparison to the run's outputs), nor independence of production (the manifest is a product of the same workflow). Only the files this reconstruction cites were re-hashed, not necessarily every file in the directory. PUBLICATION IS GATED on the subject's draft review. The probe establishes the gate's DECISION, not downstream execution or an external effect. Detection is of this regression by the two identified assertions, not universal coverage. What is established is what the preserved record permits — not that CUSTOS-CORE's controls are adequate."
+  },
+  "coverage_note": "Records were constituted and supplied by Tavares Heath's CUSTOS-CORE red-proof CI (the SUBJECT; public repo ceyptoslim/CUSTOS-CORE, AGPL). The record is the subject's own CI output for a blind, pre-registered run; it is NOT a source independent of the subject, and admitted without selective exclusion of candidate observations — all extracted candidates were admitted. This finding is bounded to that submitted surface; the absence of internal selection does not establish the submission's completeness relative to the represented system, nor whether an adverse class of observations was withheld — that completeness is **not established**.",
+  "references": [
+    {
+      "tag": "CUSTOS-CORE red-proof record — sabotage 003 (run 38610363998 / run 11)",
+      "status": "PRIMARY — frozen in-repo (003-weaken-action-gate/); re-hashed here, matches MANIFEST.md",
+      "source": "workflow_dispatch on merged main; DESIGN.md hash verified by the workflow before any 003 step; pytest_exit_code 1, verdict RED-CONFIRMED; binds injection_diff_sha256 74456f767f1cba7c… into the record identity; references clean+injected probe decisions and the full JUnit (no -x)",
+      "url": "https://github.com/ceyptoslim/CUSTOS-CORE/tree/main/docs/red-proof-records/run-38610363998/003-weaken-action-gate (run 38610363998)"
+    },
+    {
+      "tag": "Pre-registration (DESIGN.md), frozen before the first run",
+      "status": "PRIMARY — on main via PR before run 11; its hash was verified by the workflow before 003 ran",
+      "source": "names the target control (pre-flight action gate), the injected modification class (weaken the authority check so an un-registered tool proceeds), the expected violation criterion, and the probe definition (clean + injected, un-registered tool, known-allowlist tenant)",
+      "url": "https://github.com/ceyptoslim/CUSTOS-CORE (docs/red-proof-records/sabotage-003/DESIGN.md; hash pinned and verified by the workflow)"
+    },
+    {
+      "tag": "Control probe (clean + injected) — the observed delta",
+      "status": "PRIMARY — frozen in-repo (003-probe/); both artifacts re-hashed here, match MANIFEST.md",
+      "source": "same un-registered-tool request on both builds: CLEAN -> DENY (triggered_rule action_gate_tool_not_allowlisted); INJECTED -> ALLOW (no rule fired, 'No policy violations detected'); injected probe artifact carries run_id + injection_diff_sha256 byte-matched to the record identity",
+      "url": "docs/red-proof-records/run-38610363998/003-probe/"
+    },
+    {
+      "tag": "Execution evidence (JUnit, full suite, no -x)",
+      "status": "PRIMARY — frozen in-repo (003-weaken-action-gate/); re-hashed here, matches MANIFEST.md",
+      "source": "2 failed, 481 passed, 35 skipped (518 cases), exit 1; failures = TestFailClosed::test_unregistered_tenant_denies_all_tools + TestEvaluateActionAPI::test_endpoint_denies_unallowlisted_tool (allowed=True where deny required); 30 other dedicated gate tests passed",
+      "url": "docs/red-proof-records/run-38610363998/003-weaken-action-gate/"
+    },
+    {
+      "tag": "The before/after lineage (run 9 → v3 → 003)",
+      "status": "REFERENCE — the trio",
+      "source": "FN-CUSTOS-REDPROOF-001 (run 9, record v2, -x) coverage CANNOT ESTABLISH; -002 (v3, no -x) coverage ESTABLISHED; FN-CUSTOS-003 (run 11) a DIFFERENT control (action gate) on a blind pre-registered run, DETECTED, with an observed-delta probe; the determining-cause CANNOT ESTABLISH of run 11 then specified the forward instrumentation shipped in run 38811246068 (per-probe script-SHA + git-status). The CANNOT ESTABLISH of run 9 functioned as a specification; the subject improved the instrument; FN never touched the system",
+      "url": "https://github.com/ceyptoslim/CUSTOS-CORE/tree/main/docs/red-proof-records"
+    },
+    {
+      "tag": "Observation register (obs -> provenance -> integrity -> probative role)",
+      "status": "ADMISSION — four direct observations from one frozen, re-hashed CI run drive six propositions; no interpretive candidate; admitted without a separate interpretive admission step",
+      "source": "Observation count (4) is not proposition count (6). P1 <- record verdict/exit (A2, internal consistency). P2 <- sealed diff referenced by identity (A2, DOCUMENTARY: the record contains and binds a description; re-hashed here, matches). P3-probe-delta <- the clean+injected probe records (A2, observational: two RECORDED decisions, DENY vs ALLOW on the identical request). P5-detection <- full JUnit, the two named assertions (A2, scoped detection). The two CANNOT ESTABLISH have NO establishing observation: P4-violation-attribution (causal attribution of the delta to the injection — needs environment equivalence + applicable policy, not supplied) and P6-universal-coverage (universal coverage not shown; 30 other gate tests passed under this injection). Common dependency: all four observations are products of the SAME workflow run — corroboration, not mutual independence. All cited digests were re-hashed here against the frozen MANIFEST.md (match)",
+      "url": "per-proposition detail in the sections above"
+    },
+    {
+      "tag": "Frozen reconstruction manifest (the inputs a replay fixes)",
+      "status": "FROZEN — mirrors Annex D binding",
+      "source": "reconstruction_id FN-f626b9c8becace9f · observation_model FN-CUSTOS-003 hash sha256:d6ea985cc298a9d9e3582758ea02c1522e8933458d9ce3293773c867741a7eb1 · observation_set hash sha256:c282f2bcbb8a49c31c7ce0b5a68819256235ccf9c6a597135628dc1817d509e5 (4 observations: o_1c108b5af3196e43, o_5997ddacd23affde, o_9dfcd958f303c9d6, o_a3d4c62abfee2417) · rule versions fn-reconstruction-engine-v1 / fn-rule-pattern-v1 / fn-composition-v1 / fn-temporal-v1 / fn-canon-v1. Internal determinism: re-running against these frozen inputs reproduces the identifier and the six proposition outcomes; the engine is not public, so independent verification is at the OBSERVATION level — the run-11 set is frozen in-repo (docs/red-proof-records/run-38610363998/, MANIFEST.md) and the cited digests were re-fetched and re-hashed here against it (match); anyone can re-walk and re-hash the same files",
+      "url": "Annex D (binding)"
+    }
+  ],
+  "binding": {
+    "observation_model": {
+      "id": "FN-CUSTOS-003",
+      "version": null,
+      "hash": "sha256:d6ea985cc298a9d9e3582758ea02c1522e8933458d9ce3293773c867741a7eb1"
+    },
+    "policy": null,
+    "engine": {
+      "engine_version": "fn-reconstruction-engine-v1",
+      "rule_language_version": "fn-rule-pattern-v1",
+      "composition_version": "fn-composition-v1",
+      "temporal_policy_version": "fn-temporal-v1",
+      "canonicalization_version": "fn-canon-v1"
+    },
+    "observation_set": {
+      "hash": "sha256:c282f2bcbb8a49c31c7ce0b5a68819256235ccf9c6a597135628dc1817d509e5",
+      "selected_count": 4,
+      "excluded_by_window": 0,
+      "window": null,
+      "custody_verified": false,
+      "closed_at": "2026-10-21T21:22:30+00:00",
+      "selected_ids": [
+        "o_1c108b5af3196e43",
+        "o_5997ddacd23affde",
+        "o_9dfcd958f303c9d6",
+        "o_a3d4c62abfee2417"
+      ],
+      "excluded_ids": [],
+      "selection_note": "bounded observation SELECTION by t_event; not temporal inference over the interval"
+    }
+  }
+}

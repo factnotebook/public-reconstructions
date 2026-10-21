@@ -1,52 +1,70 @@
-# FN-CUSTOS-003 — The action gate under a blind pre-registered injection (bounded reconstruction)
+# FN-CUSTOS-003 — CUSTOS-CORE red-proof, detection-scoped (run 38610363998)
 
-- **Author:** Patrick Juvet Etoua
-- **Originating project:** FactNotebook · engine camsva
-- **Finding:** FN-CUSTOS-003
-- **Reconstruction ID:** `FN-da06acd59938f5b9`
-- **Canonical status:** 2026-10-20 rendering — the **sole canonical text** behind this identifier (supersedes the 2026-10-18 rendering and the provisional `FN-c220610b1c492d66`; all share the same `observation_model` and `observation_set`, so the identifier is unchanged — only the P3 basis sentence and generated date differ)
-- **Companion:** read with [FN-CUSTOS-004](../FN-CUSTOS-004/) (run 12) — the two-run arc of one evidence-improvement loop
-- **Date:** 2026-10-20
+Independent reconstruction of a subject-supplied red-proof record. Non-dispositive;
+factual-reconstruction only, not a certification or endorsement.
 
-A bounded reconstruction of what the subject's own frozen CI record (CUSTOS-CORE "red-proof" run 11) permits one to establish, contradict, or cannot establish, about a blind, pre-registered single-line injection into a pre-flight action gate.
+## ▸ Current reconstruction
 
-## Independence & review
+**[`FN-f626b9c8becace9f`](reconstructions/FN-f626b9c8becace9f/)** — current. Carries two
+corrections to the superseded version (below). Six propositions; outcomes unchanged.
 
-**Strictly non-dispositive.** Roles, no overlap: **CUSTOS-CORE defined and exercised the control** (its pre-flight action gate) and froze the pre-registration; the workflow produced the record; **FactNotebook reconstructs** what that record supports — it did not define, enforce, re-run, or control anything. **No Exempt Node:** every observation is a record from the subject's own run, re-hashed here against its manifest (match). Corroboration is **same-workflow, not mutual independence of source**.
+- Artifact-revision identity (pin the exact ledger revision, independently of the
+  reconstruction id): `finding.json` sha256
+  `80f94ffddffe407c5f801f1f42fbe111dac0450f48cb07deed6d86f8e18dcd5f`;
+  `SHA256SUMS` sha256
+  `7d3cce05c7fdd94685a237d3f82bdef3a97760fd3f1d7816d86883e05c5f9bcf`.
 
-**Tavares Heath / CUSTOS-CORE** independently recomputed every cited digest against the frozen records and confirmed **no discrepancy** in this report's descriptions of the preserved record. That review is a **factual verification of the preserved records only — not a certification, validation, or endorsement** of the interpretation or conclusions, which remain FactNotebook's.
+## Versions (both preserved and independently verifiable)
 
-## What the record establishes (6 propositions)
+| Reconstruction | Status | Location |
+|---|---|---|
+| `FN-f626b9c8becace9f` | **current** | [`reconstructions/FN-f626b9c8becace9f/`](reconstructions/FN-f626b9c8becace9f/) |
+| `FN-da06acd59938f5b9` | superseded | [`reconstructions/FN-da06acd59938f5b9/`](reconstructions/FN-da06acd59938f5b9/) · and the files at this folder's root |
 
-| Proposition | Result |
-|---|---|
-| **P1** verdict RED-CONFIRMED follows the declared rule (exit code 1 ≠ 0) | **ESTABLISHED** |
-| **P2** the record contains a sealed description (SHA-256) of the injected modification | **ESTABLISHED** |
-| **P3** clean and injected probe records report DENY vs ALLOW for an identically-specified request | **ESTABLISHED** |
-| **P4** the injection is the *determining cause* of the ALLOW (causal attribution) | **CANNOT ESTABLISH** |
-| **P5** the suite *detected* this regression (two named admin-auth assertions failed) | **ESTABLISHED** |
-| **P6** RED-CONFIRMED establishes *universal* coverage (every weakening would be caught) | **CANNOT ESTABLISH** |
+**Reference continuity.** The root-level `finding.md`, `finding.pdf`, `finding.json`
+and `SHA256SUMS` are preserved unchanged from the original publication
+(`FN-da06acd59938f5b9`) so existing direct links still resolve to exactly what was
+examined. They are historical, not the current reconstruction. Verify any version with
+`sha256sum -c SHA256SUMS` inside its directory.
 
-Headline: a **detected regression, bounded** — the gate's DENY→ALLOW delta and its detection are established on the record; whether the injection is the *determining cause* is a bounded inference, not an observation (P4); and detection of this class is **not** a clean bill of health (P6). Even if P4 held, an ALLOW is a violation at the **authorization-decision** boundary — not evidence the tool executed or that a real-world effect occurred (the same line drawn in the Sovereign Veritas X5 reconstruction).
+## Why FN-da06acd59938f5b9 was superseded — two corrections of different kinds
 
-## Source (pinned)
+An independent line-by-line verification by the subject (Tavares) against the frozen
+run manifest, and our own re-run of the reproducibility check on the recovered original
+sources, each surfaced one defect. They are different in nature:
 
-One public CI run — **38610363998 (run 11), commit `f5d48c9`** — frozen in-repo at `docs/red-proof-records/run-38610363998/` with a SHA-256 manifest. Every cited digest (sealed injection diff `74456f76…`, both probe artifacts, JUnit, pytest output, exit code) was re-fetched and re-hashed here and matches the manifest. Subject repo: `ceyptoslim/CUSTOS-CORE` (AGPL).
+**1. Semantic correction (the evaluated claim).** Proposition **P5** stated the two
+failing tests were "admin-auth assertions." On the record they are **action-gate
+allowlist, deny-by-default** assertions (`tests/test_action_gate.py`); the finding's own
+basis already named them correctly. The P5 statement now reads "the two identified
+action-gate allowlist assertions." Because a proposition's statement is part of the
+reconstruction's model, this changes the identifier
+(`FN-da06acd59938f5b9 → FN-f626b9c8becace9f`). **All six proposition outcomes are
+unchanged, and P5 remains ESTABLISHED** — re-derived on the corrected statement, not
+assumed. No conclusion is reversed.
 
-## Limitations
+**2. Evidentiary-reference correction (how a source is cited).** The admission-register
+entry for the P3 probe-delta observation named its source with one composite path
+(`red-proof-probe-{clean,injected}.json`) that did not resolve to a verifiable file. P3
+is a **delta over both probe records** (clean = deny, injected = allow, identical
+request), so both files are required sources. The entry now references them
+explicitly — `red-proof-probe-clean.json` (`b5951061…`) and
+`red-proof-probe-injected.json` (`5683de84…`), both matching the run manifest. This
+corrects the observation's **source reference**, not its evidentiary meaning, and does
+**not** change the reconstruction identifier (the admission register is a projection
+outside the identity basis). It does change the published bytes — which is why the
+artifact-revision identity above pins the exact register revision independently of the
+reconstruction id.
 
-Same-workflow corroboration (not independent of the subject); P4 held at CANNOT ESTABLISH (clean-probe code not hash-bound, untracked/environmental deltas not excluded); P6 records that 30 other gate tests passed without a scope analysis; the blindness of the run rests partly on subject-declared protocol. No legal or safety conclusion is drawn.
+These two defects are a small illustration of three distinct properties: **file
+integrity** (the sources were intact — Tavares verified this), **evidentiary-reference
+validity** (one citation was malformed — corrected here), and **conclusion accuracy**
+(one label was wrong — corrected here). A reconstruction can be internally consistent
+yet still carry an inaccurate claim or a malformed source reference; both are now fixed,
+and the change is recorded rather than applied silently.
 
-## Identity (publication convention)
+## Non-endorsement
 
-| Identity | Designates |
-|---|---|
-| Reconstruction ID `FN-da06acd59938f5b9` | the reconstruction state (bound to its observation model + admitted observations + rules) |
-| SHA-256 of `finding.{pdf,md,json}` (see `SHA256SUMS`) | the exact bytes of this documentary representation |
-| Canonical status | the 2026-10-20 rendering, designated for publication |
-| Version history | 2026-10-18 rendering and provisional `FN-c220610b1c492d66` — superseded |
-
-## Files
-
-- `finding.pdf` / `finding.md` / `finding.json` — the finding (full propositions, states, provenance, limitations)
-- `SHA256SUMS` — digests of the three files above · verify: `sha256sum -c SHA256SUMS`
+Independent reconstruction by FactNotebook; factual-reconstruction only, not a
+certification or endorsement, and not independent verification of a production incident.
+Authority and interpretation remain with the accountable parties.
