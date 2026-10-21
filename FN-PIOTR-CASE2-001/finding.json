@@ -112,6 +112,20 @@
         "independence_class": "submitted"
       },
       "decided_by": "FactNotebook",
+      "supporting": [
+        {
+          "record": "evidence/logger_heartbeat.csv",
+          "sha256": "c5d9d7796bdb41addfc35b6b2179dd6d28a94eb0b5dce5a9194c093d27c576b6"
+        },
+        {
+          "record": "evidence/log_anchors.json",
+          "sha256": "be743dddaa194ab8ae754d06204375703bce7281fc0943d9336da7584f4d985d"
+        },
+        {
+          "record": "evidence/logging_config.json",
+          "sha256": "d802bec9d8a38af0f56489b0e99e7e3836812bf6b7f24571f93fbc207490e549"
+        }
+      ],
       "admission_rule": "read from the integrity-verified bundle (MANIFEST.sha256 11/11); no orders read by the key -> R-A-record"
     },
     {
@@ -129,7 +143,13 @@
         "independence_class": "submitted"
       },
       "decided_by": "FactNotebook",
-      "admission_rule": "no I-0988 read by the key recorded; heartbeat c5d9d779… shows the gap -> R-B-record"
+      "supporting": [
+        {
+          "record": "evidence/logger_heartbeat.csv",
+          "sha256": "c5d9d7796bdb41addfc35b6b2179dd6d28a94eb0b5dce5a9194c093d27c576b6"
+        }
+      ],
+      "admission_rule": "no I-0988 read by the key recorded; heartbeat (logger_heartbeat.csv c5d9d7796bdb41addfc35b6b2179dd6d28a94eb0b5dce5a9194c093d27c576b6) shows the gap -> R-B-record"
     },
     {
       "candidate": "obs-R-C",
@@ -146,7 +166,17 @@
         "independence_class": "submitted"
       },
       "decided_by": "FactNotebook",
-      "admission_rule": "only a call-level customers query by the key (no row ids); config d802bec9… level 'call' -> R-C-record"
+      "supporting": [
+        {
+          "record": "evidence/logging_config.json",
+          "sha256": "d802bec9d8a38af0f56489b0e99e7e3836812bf6b7f24571f93fbc207490e549"
+        },
+        {
+          "record": "evidence/records_in_scope.csv",
+          "sha256": "6f11b4a0682f3506ee11eaef8a632d031b344e521400dda9cf5a1c86c9369b3f"
+        }
+      ],
+      "admission_rule": "only a call-level customers query by the key (no row ids); config (logging_config.json d802bec9d8a38af0f56489b0e99e7e3836812bf6b7f24571f93fbc207490e549) level 'call' -> R-C-record"
     },
     {
       "candidate": "obs-R-D",
@@ -163,7 +193,13 @@
         "independence_class": "submitted"
       },
       "decided_by": "FactNotebook",
-      "admission_rule": "no A-7730 read by the key; config d802bec9… addresses log_chain 'none' -> R-D-record"
+      "supporting": [
+        {
+          "record": "evidence/logging_config.json",
+          "sha256": "d802bec9d8a38af0f56489b0e99e7e3836812bf6b7f24571f93fbc207490e549"
+        }
+      ],
+      "admission_rule": "no A-7730 read by the key; config (logging_config.json d802bec9d8a38af0f56489b0e99e7e3836812bf6b7f24571f93fbc207490e549) addresses log_chain 'none' -> R-D-record"
     },
     {
       "candidate": "obs-R-E",
@@ -197,7 +233,33 @@
         "independence_class": "submitted"
       },
       "decided_by": "FactNotebook",
-      "admission_rule": "other actors read these tables; incident.json 3d6dc061… declares key scope -> BROAD path completeness"
+      "supporting": [
+        {
+          "record": "evidence/incident.json",
+          "sha256": "3d6dc061e3a1996f14641e350a38b9a40bfab7eee4807b12036b24376b9525c1"
+        }
+      ],
+      "admission_rule": "other actors read these tables; incident.json (3d6dc061e3a1996f14641e350a38b9a40bfab7eee4807b12036b24376b9525c1) declares key scope -> BROAD path completeness"
+    },
+    {
+      "candidate": "cand-storage-attestation",
+      "subject": "evidence/storage_attestation.json",
+      "predicate": "database_snapshot_integrity_attested",
+      "status": "rejected",
+      "primary_record": "evidence/storage_attestation.json",
+      "primary_sha256": "74d40b58631fd3931e21a8c656d82203c382ce3eb13c348601760adb5e885c46",
+      "corroboration": {
+        "status": "single",
+        "instruments": [
+          "controller's synthetic bundle"
+        ],
+        "independence_class": "submitted"
+      },
+      "decided_by": "FactNotebook",
+      "acquisition_method": "bundle file (in MANIFEST.sha256, 11/11 match), re-read not re-run",
+      "admission_rule": "admission criterion — does the candidate bear on an access-logging non-access proposition? storage_attestation.json attests DATABASE-SNAPSHOT integrity only (its own field covers_access_logs=false; the pack README states it 'does not cover the logs'). The non-access propositions turn on the access-logging pipeline, which this attestation does not cover.",
+      "reason": "attests data-snapshot integrity (tables orders/invoices/customers/addresses), NOT the access-logging pipeline the propositions turn on — covers_access_logs=false. Considered and not admitted as an establishing observation; recorded here so the extraction decision is inspectable.",
+      "at": "reconstruction admission pass"
     }
   ],
   "extraction_divergences": [],
@@ -255,6 +317,12 @@
       "url": "evidence/incident.json (key_scope); evidence/access_log.jsonl (other actors)"
     },
     {
+      "tag": "Evidence manifest — per-file SHA-256 (full), re-verified here (Piotr Reder's digests point)",
+      "status": "PRIMARY — MANIFEST.sha256 recomputed here, 11/11 match; each supporting file carries its own full digest below, not only the primary access_log",
+      "source": "evidence/access_log.jsonl 5126b28f0605c8391c4bccf7cb81b2025edb5c8a90a699b081a7e4a856d8de02 · evidence/logger_heartbeat.csv c5d9d7796bdb41addfc35b6b2179dd6d28a94eb0b5dce5a9194c093d27c576b6 · evidence/logging_config.json d802bec9d8a38af0f56489b0e99e7e3836812bf6b7f24571f93fbc207490e549 · evidence/incident.json 3d6dc061e3a1996f14641e350a38b9a40bfab7eee4807b12036b24376b9525c1 · evidence/log_anchors.json be743dddaa194ab8ae754d06204375703bce7281fc0943d9336da7584f4d985d · evidence/records_in_scope.csv 6f11b4a0682f3506ee11eaef8a632d031b344e521400dda9cf5a1c86c9369b3f · evidence/repo_events.json 616ca63cce8c42d22b057b9ab28f31741fb36731bc01af7a8ecb16847e5bd6e5 · evidence/storage_attestation.json 74d40b58631fd3931e21a8c656d82203c382ce3eb13c348601760adb5e885c46 (attests data snapshot only; covers_access_logs=false -> not admitted, see Annex B)",
+      "url": "MANIFEST.sha256 (full per-file digests)"
+    },
+    {
       "tag": "Observation register (obs -> provenance -> integrity -> probative role)",
       "status": "ADMISSION — six direct observations from one integrity-verified synthetic bundle drive eleven propositions (each record tested at two levels); no interpretive candidate, admitted without a separate interpretive admission step",
       "source": "Observation count (6) is not proposition count (11). RECORD level (what the log contains, read as submitted): four observations each ESTABLISH a record-level silence (R-A/B/C/D-record), and the single recorded read of I-3301 CONTRADICTS R-E-record. WORLD level (real-world non-access): the five R-*-world propositions have NO establishing observation -> CANNOT ESTABLISH, each for its named reason (declared-anchor+capture / coverage / object-granularity / integrity-structure / declared-attribution); the recorded read of I-3301 leaves R-E-world unestablished too. BROAD (path completeness) also has no establishing observation (the sixth observation documents the other-actor path facts without binding). The surface is SUBMITTED by the controller (synthetic): integrity is verified, independence and completeness are NOT — which is why no world-level non-access is established and the broad claim CANNOT ESTABLISH",
@@ -287,7 +355,7 @@
       "excluded_by_window": 0,
       "window": null,
       "custody_verified": false,
-      "closed_at": "2026-10-21T03:06:18+00:00",
+      "closed_at": "2026-10-21T08:23:57+00:00",
       "selected_ids": [
         "o_1590b50510a54dd7",
         "o_4bd93f802edbac6b",
