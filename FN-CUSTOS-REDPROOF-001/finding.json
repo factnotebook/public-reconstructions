@@ -1,0 +1,123 @@
+{
+  "case_id": "FN-CUSTOS-REDPROOF-001",
+  "title": "A CI red-proof record: verdict-consistency ≠ substantive detection ≠ coverage",
+  "prepared_for": "Tavares Heath — independent reconstruction test (CUSTOS-CORE red-proof)",
+  "reconstruction_id": "FN-b27fe08ed9252198",
+  "engine_version": "0.9.0",
+  "status": "FINAL — BOUNDED",
+  "observation_surface": {},
+  "propositions": [
+    {
+      "id": "P1-verdict-follows-rule",
+      "section": "1 — Verdict consistency",
+      "statement": "the recorded verdict RED-CONFIRMED follows the declared verdict rule (pytest_exit_code != 0 -> RED-CONFIRMED) applied to the recorded exit code (1)",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "From the evidence record v2 (SHA-verified): pytest_exit_code = 1; rule 'observations.pytest_exit_code != 0 -> RED-CONFIRMED; else FAULTY-GREEN'; verdict = RED-CONFIRMED. 1 != 0 => RED-CONFIRMED. This establishes the verdict is CONSISTENT with its own declared rule — an internal-consistency check on the record. It does NOT by itself establish that the underlying run is faithful (P2) or that the substantive regression was detected (P3)"
+    },
+    {
+      "id": "P2-exit-code-faithful",
+      "section": "2 — Recorded outcome ↔ execution evidence",
+      "statement": "the recorded non-zero pytest outcome (a test genuinely failed during the run) is corroborated by the preserved execution reports and GitHub's observed workflow behaviour, independently of the record's verdict field",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "The pytest output (hash-matched) reads '1 failed, 32 passed' and the JUnit XML (hash-matched) carries tests='33', failures='1' — two views of the SAME run, both the subject's artifacts. The INDEPENDENT corroboration is GitHub's own job steps (not the subject's record): step 7 'Enforce red-proof verdict' (which would exit 1 on a zero exit code) succeeded, and step 9 'Red confirmed' (guarded by exit_code != 0) ran rather than being skipped — so exit_code != 0 on GitHub's own record. These step outcomes are GitHub-hosted execution metadata, recorded SEPARATELY from the subject-generated evidence artifact but DEPENDENT on the same workflow execution and the values it passes — a second, differently-hosted view, not a fully independent re-measurement. Scope: what is corroborated is that a test FAILED / the outcome was NON-ZERO; the exact value '1' is the record's JSON field and is not separately re-derived"
+    },
+    {
+      "id": "P3-regression-detected",
+      "section": "3 — Substantive detection",
+      "statement": "during run 38446904362 an intended admin-auth assertion failed with exactly the symptom the injected regression produces — an admin endpoint (/v1/audit) no longer requiring authentication",
+      "state": "ESTABLISHED",
+      "reason": null,
+      "basis": "The single failing test (pytest runs with -x) is tests/test_admin_auth.py::TestAdminEndpointsRequireAuth::test_audit_endpoints_reject_missing_token: 'AssertionError: /v1/audit must require auth, got 200' (assert 200 == 401) — an admin endpoint no longer requiring authentication, which is exactly the effect of disabling token verification. The 32 preceding passing tests support that the suite was operational, but do NOT independently exclude every environment-specific cause of this single failure. The causal chain is kept honest, at three levels: (i) the script was DESIGNED to disable auth — established (it does `sed 's/return verify_token(credentials)/return None/' main.py`, and that target exists at main.py@6ed3cff, lines 122 & 137); (ii) the script RAN — corroborated by GitHub's job step 5 'Apply known-bad sabotage patch' (success), independently of the subject's record; (iii) that this modification CAUSED this specific failure is a strong INFERENCE (matching symptom + the subject-declared red-proof premise that the suite is green on clean code), NOT a byte-level demonstration — no post-injection diff or before/after execution was captured here, and FactNotebook does not re-run. What is ESTABLISHED is the scoped claim in the proposition; full causal proof would be more demanding"
+    },
+    {
+      "id": "P4-regression-class-covered",
+      "section": "4 — Coverage of the regression class",
+      "statement": "every intended 401/auth regression test failed under the sabotage — the full admin-auth regression class was exercised and detected (the sabotage script's own claim: 'Every 401/auth regression test MUST fail')",
+      "state": "CANNOT_ESTABLISH",
+      "reason": "no_channel",
+      "basis": "CANNOT ESTABLISH — the workflow runs pytest with -x, so execution STOPPED at the first failing assertion (JUnit: 33 testcases = 32 passed + 1 failed; pytest output: 'stopping after 1 failures'). Exactly ONE intended auth assertion was observed to fail; the remaining auth-regression tests in the class were not run, so the record does not permit establishing that the whole class failed. Reason class: coverage / sufficiency. Addressing it would need a re-run of THIS sabotage (001) WITHOUT -x, so the whole class executes. (The subject's proposed third sabotage class probes a DIFFERENT coverage question — whether believed-untested behaviour is covered — not the coverage of this regression class.) This is the observation-set limit the subject declared"
+    }
+  ],
+  "candidate_admission_register": [],
+  "extraction_divergences": [],
+  "derivation_model": null,
+  "model_divergences": [],
+  "acquisition_boundary": {
+    "surface_type": "submitted",
+    "constituted_by": "Tavares Heath's CUSTOS-CORE 'red-proof' CI (the SUBJECT; public repo ceyptoslim/CUSTOS-CORE, AGPL). The records are the subject's own CI output, published on GitHub; FactNotebook retrieved and SHA-256-verified them itself (it was not handed them). They are NOT an independent-of-subject source; the only separately-hosted corroboration (GitHub's own job-step outcomes) still depends on the same workflow execution",
+    "submission_form": "one public CI run (38446904362): evidence record v2, JUnit XML, pytest output, workflow, sabotage script, code at the commit — published publicly, FN-retrieved",
+    "from_surface": "",
+    "procedure": "",
+    "acquisition_mode": "selective",
+    "period": "",
+    "permissions": "",
+    "extraction_instrument": "the subject's CI (pytest under a known-bad sabotage patch) — FactNotebook re-reads the preserved artifacts, it does NOT re-run the suite",
+    "admission_authority": "FactNotebook (proposer). Three steps are kept distinct, and integrity is NOT treated as sufficiency: (1) ACQUISITION + INTEGRITY — the machine artifacts were independently retrieved and SHA-256 verified: the retrieved artifacts match the recorded cryptographic digests; their substantive claims remain subject to independent evaluation; (2) ADMISSION as attributed observations — they are direct, structured records, so no interpretive admission step is needed (no fuzzy candidate to adjudicate); (3) RELEVANCE + SUFFICIENCY per proposition — appraised in the reconstruction itself, never inferred from integrity: an intact, authentically-retrieved artifact can still be insufficient for a given proposition (P4 is CANNOT ESTABLISH precisely because the record, though intact, cannot carry the coverage claim). The one reasoned link (the failing assertion realises the sabotage's declared intent, P3) is grounded in the assertion's own message. Not an independent audit",
+    "limitations": "Bounded to one run (38446904362, sabotage 001). The evidence record is produced by the subject's own CI, but it was independently retrieved and its JUnit / pytest-output SHA-256 match it, and GitHub's own job-step outcomes corroborate exit != 0 independently of it. The suite was NOT re-run here. Crucially, pytest ran with -x: only the FIRST failing assertion was recorded, so coverage of the full regression class is not observable from this run (P4). This establishes what the preserved record permits — not that CUSTOS-CORE's controls are adequate."
+  },
+  "coverage_note": "Records were selected and supplied by Tavares Heath's CUSTOS-CORE 'red-proof' CI (the SUBJECT; public repo ceyptoslim/CUSTOS-CORE, AGPL). The records are the subject's own CI output, published on GitHub; FactNotebook retrieved and SHA-256-verified them itself (it was not handed them). They are NOT an independent-of-subject source; the only separately-hosted corroboration (GitHub's own job-step outcomes) still depends on the same workflow execution. This finding is bounded to that submitted surface; completeness beyond it — and whether an adverse class of observations was withheld — is **not established**. The instrumentation was **selective**, not exhaustive: a selective extraction is not an exhaustive observation of the surface.",
+  "references": [
+    {
+      "tag": "CUSTOS-CORE red-proof evidence record v2 (001-weaken-admin-auth)",
+      "status": "PRIMARY — independently retrieved (nightly.link); JUnit & pytest-output SHA-256 match the record",
+      "source": "run_id 38446904362, commit 6ed3cff1935f…, injected_regression_id 001-weaken-admin-auth, sabotage_script_sha256 82a0329d…; pytest_exit_code 1; verdict RED-CONFIRMED under rule v2; ci_job_outcome 'success' = the test STEP's outcome (it ends in `tail` under `set +e`), not a pass",
+      "url": "https://github.com/ceyptoslim/CUSTOS-CORE/actions/runs/38446904362"
+    },
+    {
+      "tag": "Execution evidence (JUnit XML + pytest output)",
+      "status": "PRIMARY — retrieved via nightly.link; SHA-256 68086270…a3b73e / 45b1c5c3…c1dec match the record",
+      "source": "33 tests, 32 passed, 1 failed (pytest -x); the one failure = tests/test_admin_auth.py::TestAdminEndpointsRequireAuth::test_audit_endpoints_reject_missing_token — '/v1/audit must require auth, got 200' (assert 200 == 401)",
+      "url": "artifact red-proof-records-001-weaken-admin-auth (public run page)"
+    },
+    {
+      "tag": "Workflow + sabotage + code",
+      "status": "PRIMARY — raw.githubusercontent; sabotage SHA-256 matches the record; sed target present at the commit",
+      "source": "ci-red-proof.yml runs `pytest tests/ -q --no-header -x …` and derives the verdict from the exit code; 001-weaken-admin-auth.sh does `sed 's/return verify_token(credentials)/return None/' main.py`; main.py@6ed3cff has that line at 122 & 137",
+      "url": "https://github.com/ceyptoslim/CUSTOS-CORE/blob/main/.github/workflows/ci-red-proof.yml"
+    },
+    {
+      "tag": "GitHub-hosted job-step outcomes",
+      "status": "SEPARATELY-HOSTED — GitHub Actions public API; recorded apart from the subject's evidence artifact but dependent on the same workflow execution",
+      "source": "job 'Sabotage 001-weaken-admin-auth must turn tests RED': step 7 'Enforce red-proof verdict' success (would exit 1 on a zero exit code), step 9 'Red confirmed' (guarded by exit_code != 0) ran => exit != 0",
+      "url": "https://api.github.com/repos/ceyptoslim/CUSTOS-CORE/actions/runs/38446904362/jobs"
+    },
+    {
+      "tag": "Frozen reconstruction manifest (the inputs a replay fixes)",
+      "status": "FROZEN — mirrors Annex D binding; lets a reader see exactly what a replay holds fixed",
+      "source": "reconstruction_id FN-b27fe08ed9252198 · observation_model FN-CUSTOS-REDPROOF-001 hash sha256:4eb29176a732927375f60a0d66384fcd20677b2412caf37b4b761ca6ac4d6f05 · observation_set hash sha256:b78ab1ac6f251e7c54eddfa349e213e26e774ef11f10975fcd56b7ae2366cb4c (3 observations: o_8c4efc2f451e68c2, o_8da7d6d3d689dc8b, o_c2d7ecf96f1c3cad) · rule versions fn-reconstruction-engine-v1 / fn-rule-pattern-v1 / fn-composition-v1 / fn-temporal-v1 / fn-canon-v1. Internal determinism: re-running against these frozen inputs reproduces the identifier and the four states. The engine is not public, so independent verification is at the OBSERVATION level — the public artifacts in the references above can be re-fetched and re-hashed by anyone",
+      "url": "Annex D (binding)"
+    }
+  ],
+  "binding": {
+    "observation_model": {
+      "id": "FN-CUSTOS-REDPROOF-001",
+      "version": null,
+      "hash": "sha256:4eb29176a732927375f60a0d66384fcd20677b2412caf37b4b761ca6ac4d6f05"
+    },
+    "policy": null,
+    "engine": {
+      "engine_version": "fn-reconstruction-engine-v1",
+      "rule_language_version": "fn-rule-pattern-v1",
+      "composition_version": "fn-composition-v1",
+      "temporal_policy_version": "fn-temporal-v1",
+      "canonicalization_version": "fn-canon-v1"
+    },
+    "observation_set": {
+      "hash": "sha256:b78ab1ac6f251e7c54eddfa349e213e26e774ef11f10975fcd56b7ae2366cb4c",
+      "selected_count": 3,
+      "excluded_by_window": 0,
+      "window": null,
+      "custody_verified": false,
+      "closed_at": "2026-10-13T20:35:05+00:00",
+      "selected_ids": [
+        "o_8c4efc2f451e68c2",
+        "o_8da7d6d3d689dc8b",
+        "o_c2d7ecf96f1c3cad"
+      ],
+      "excluded_ids": [],
+      "selection_note": "bounded observation SELECTION by t_event; not temporal inference over the interval"
+    }
+  }
+}
